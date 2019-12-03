@@ -23,6 +23,18 @@ class HeroinesController < ApplicationController
     end
   end
 
+  def search
+    query = params[:q]
+    @heroines = []
+    heroines = Heroine.all.each do |x|
+      heroine_power = Power.find(x.power_id).name
+      if heroine_power.downcase.include?(query.downcase)
+        @heroines << x
+      end
+    end
+    @heroines
+  end
+
   private
 
   def heroine_params
